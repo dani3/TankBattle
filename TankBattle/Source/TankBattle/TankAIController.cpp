@@ -1,9 +1,13 @@
 #include "TankAIController.h"
 #include "Engine/World.h"
 
+// Called when the game starts or when spawned
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
 
 	auto PlayerTank = GetPlayerTank();
 	if (!PlayerTank)
@@ -14,6 +18,13 @@ void ATankAIController::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AI controller found PlayerController: %s"), *(PlayerTank->GetName()));
 	}
+}
+
+// Called every frame
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
 }
 
 ATank * ATankAIController::GetControlledTank() const
