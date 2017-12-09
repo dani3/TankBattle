@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "TankAimingComponent.h"
 #include "Tank.generated.h"
 
 UCLASS()
@@ -13,6 +14,9 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetBarrel(UStaticMeshComponent * Barrel);
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -21,6 +25,9 @@ public:
 
 	// Aim at the location given
 	void AimAt(FVector HitLocation) const;
+
+protected:
+	UTankAimingComponent * TankAimingComponent = nullptr;
 
 private:
 	// Called to bind functionality to input
