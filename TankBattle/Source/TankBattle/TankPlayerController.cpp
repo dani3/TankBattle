@@ -1,4 +1,5 @@
 #include "TankPlayerController.h"
+#include "Engine/World.h"
 
 // Called when the game starts or when spawned
 void ATankPlayerController::BeginPlay()
@@ -34,11 +35,8 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector HitLocation;
 	if (GetSightRayHitLocation(HitLocation))
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *(HitLocation.ToString()));
-
-		// Get world location of linetrace through the crosshair
-		// If it hits something
-			// Aim at this point
+		// Aim at this point
+		GetControlledTank()->AimAt(HitLocation);
 	}
 }
 
@@ -58,13 +56,14 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector & OutHitLocation) con
 	auto ScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
 
 	// "De-project" the screen position of the crosshair to a world direction
-	FVector WorldDirection;
-	if (GetLookDirection(ScreenLocation, WorldDirection))
+	FVector LookDirection;
+	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
 		// Line-trace along that look direction, and see what we hit (up to max range)
+		GetLookVectorHitLocation(LookDirection, OutHitLocation);
 	}
 
-	return false;
+	return true;
 }
 
 // "De-project" the screen position of the crosshair to a world direction
@@ -74,5 +73,29 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector &
 	return DeprojectScreenPositionToWorld(
 				ScreenLocation.X, ScreenLocation.Y, WorldLocation, WorldDirection);
 }
+
+// Line-trace to get the world location where the camera is looking at.
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector & OutHitLocation) const
+{
+	FHitResult HitResult;
+	auto StartLocation = PlayerCameraManager->GetCameraLocation();
+	auto EndLocation = StartLocation + (LookDirection * LineTraceRange);
+	if (GetWorld()->LineTraceSingleByChannel(
+			HitResult
+		  , StartLocation
+		  , EndLocation
+		  , ECollisionChannel::ECC_Visibility))
+	{
+		OutHitLocation = HitResult.Location;
+
+		return true;
+	}
+
+	OutHitLocation = FVector(0.f);
+
+	return false;
+}
+
+
 
 

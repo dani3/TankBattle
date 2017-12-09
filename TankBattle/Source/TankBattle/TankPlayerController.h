@@ -21,6 +21,8 @@ private:
 	float CrossHairXLocation = .5f;
 	UPROPERTY(EditAnywhere)
 	float CrossHairYLocation = .33333f;
+	UPROPERTY(EditAnywhere)
+	float LineTraceRange = 1000000.f;
 
 	// Start the tank moving the barrel so that a shot would hit
 	// where the crosshair intersects the world
@@ -31,4 +33,6 @@ private:
 	bool GetSightRayHitLocation(FVector & OutHitLocation) const;
 	// "De-project" the screen position of the crosshair to a world direction
 	bool GetLookDirection(FVector2D ScreenLocation, FVector & WorldDirection) const;
+	// Line-trace to get the world location where the camera is looking at.
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector & OutHitLocation) const;
 };
