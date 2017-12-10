@@ -17,7 +17,6 @@ public:
 	UTankAimingComponent();
 
 	void SetBarrel(UTankBarrel * Barrel);
-
 	void SetTurret(UTankTurret * Turret);
 
 	void AimAt(FVector HitLocation, float LaunchSpeed);
@@ -27,5 +26,4 @@ private:
 	UTankTurret * Turret = nullptr;
 
 	void MoveBarrelTowards(FVector AimDirection);
-	void MoveTurretTowards(FVector AimDirection);
 };
