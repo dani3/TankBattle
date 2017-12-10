@@ -1,34 +1,49 @@
 #include "TankAimingComponent.h"
-#include "Components/StaticMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "TankBarrel.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
-void UTankAimingComponent::SetBarrel(UStaticMeshComponent * Barrel)
+void UTankAimingComponent::SetBarrel(UTankBarrel * Barrel)
 {
 	this->Barrel = Barrel;
 }
 
-// Called every frame
-void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	if (!Barrel) { return; }
+
+	FVector OutLauchVelocity;
+	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
+
+	// Calculate the OutLaunchVelocity
+	if (UGameplayStatics::SuggestProjectileVelocity(
+			this
+		  , OutLauchVelocity
+		  , StartLocation
+		  , HitLocation
+		  , LaunchSpeed))
+	{
+		auto AimDirection = OutLauchVelocity.GetSafeNormal();
+
+		// Move barrel
+		MoveBarrelTowards(AimDirection);
+	}
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation) const
+void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-	UE_LOG(LogTemp, Warning, TEXT("%s aiming at: %s from: %s"), 
-		*(GetOwner()->GetName()), *(HitLocation.ToString()), *(Barrel->GetComponentLocation().ToString()));
+	// Work-out difference between current barrel rotation and AimDirection
+	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
+	auto AimAsRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimAsRotator - BarrelRotator;
+
+	Barrel->Elevate(5);
 }
 
