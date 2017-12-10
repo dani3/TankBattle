@@ -5,6 +5,7 @@
 #include "Tank.generated.h"
 
 class UTankBarrel;
+class UTankTurret;
 class UTankAimingComponent;
 
 UCLASS()
@@ -18,6 +19,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrel(UTankBarrel * Barrel);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetTurret(UTankTurret * Turret);
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
