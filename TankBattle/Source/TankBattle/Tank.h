@@ -45,6 +45,9 @@ private:
 
 	UTankBarrel * Barrel;
 
+	float ReloadTimeInSeconds = 3.f;
+	double LastTimeFire = 0;
+
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 };
