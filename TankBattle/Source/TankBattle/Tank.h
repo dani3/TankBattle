@@ -28,17 +28,17 @@ public:
 	virtual void BeginPlay() override;
 
 	// Aim at the location given
-	void AimAt(FVector HitLocation) const;
+	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable)
-	void Fire() const;
+	void Fire();
 
 protected:
 	UTankAimingComponent * TankAimingComponent = nullptr;
 
 private:
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 100000.f;
+	float LaunchSpeed = 8000.f;
 
 	UPROPERTY(EditAnywhere, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBluePrint;
