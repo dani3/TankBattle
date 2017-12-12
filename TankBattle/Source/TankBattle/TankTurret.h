@@ -4,6 +4,9 @@
 #include "Components/StaticMeshComponent.h"
 #include "TankTurret.generated.h"
 
+/*
+ * TankTurret is used to rotate the turret with a maximum speed.
+ */
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class TANKBATTLE_API UTankTurret : public UStaticMeshComponent
 {

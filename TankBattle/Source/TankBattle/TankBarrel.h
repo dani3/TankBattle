@@ -4,6 +4,10 @@
 #include "Components/StaticMeshComponent.h"
 #include "TankBarrel.generated.h"
 
+/*
+ * TankBarrel is used to elevate the barrel with a 
+ * maximum speed and maximum and minimum degrees of elevation.
+ */
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class TANKBATTLE_API UTankBarrel : public UStaticMeshComponent
 {
