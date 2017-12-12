@@ -1,6 +1,7 @@
 #include "Tank.h"
 #include "Engine/World.h"
 #include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 #include "Projectile.h"
 #include "TankBarrel.h"
 #include "TankTrack.h"
@@ -12,6 +13,7 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+	TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
 }
 
 // Called when the game starts or when spawned
@@ -30,16 +32,6 @@ void ATank::SetBarrel(UTankBarrel * Barrel)
 void ATank::SetTurret(UTankTurret * Turret)
 {
 	TankAimingComponent->SetTurret(Turret);
-}
-
-void ATank::SetLeftTrack(UTankTrack * Track)
-{
-
-}
-
-void ATank::SetRightTrack(UTankTrack * Track)
-{
-
 }
 
 // Called to bind functionality to input

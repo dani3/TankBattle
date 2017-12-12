@@ -7,6 +7,7 @@
 class UTankBarrel;
 class UTankTurret;
 class UTankAimingComponent;
+class UTankMovementComponent;
 class UTankTrack;
 class AProjectile;
 
@@ -25,12 +26,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurret(UTankTurret * Turret);
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetLeftTrack(UTankTrack * Track);
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetRightTrack(UTankTrack * Track);
-
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -43,8 +38,11 @@ public:
 protected:
 	UTankAimingComponent * TankAimingComponent = nullptr;
 
+	UPROPERTY(BlueprintReadOnly)
+	UTankMovementComponent * TankMovementComponent = nullptr;
+
 private:
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBluePrint;
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
