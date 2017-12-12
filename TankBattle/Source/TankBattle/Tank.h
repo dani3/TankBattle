@@ -7,6 +7,7 @@
 class UTankBarrel;
 class UTankTurret;
 class UTankAimingComponent;
+class UTankTrack;
 class AProjectile;
 
 UCLASS()
@@ -23,6 +24,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurret(UTankTurret * Turret);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetLeftTrack(UTankTrack * Track);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetRightTrack(UTankTrack * Track);
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -1,8 +1,9 @@
 #include "Tank.h"
-#include "TankAimingComponent.h"
 #include "Engine/World.h"
+#include "TankAimingComponent.h"
 #include "Projectile.h"
 #include "TankBarrel.h"
+#include "TankTrack.h"
 
 // Sets default values
 ATank::ATank()
@@ -29,6 +30,16 @@ void ATank::SetBarrel(UTankBarrel * Barrel)
 void ATank::SetTurret(UTankTurret * Turret)
 {
 	TankAimingComponent->SetTurret(Turret);
+}
+
+void ATank::SetLeftTrack(UTankTrack * Track)
+{
+
+}
+
+void ATank::SetRightTrack(UTankTrack * Track)
+{
+
 }
 
 // Called to bind functionality to input
