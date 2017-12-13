@@ -19,5 +19,5 @@ public:
 private:
 	// Max force per track in Newtons
 	UPROPERTY(EditDefaultsOnly)
-	float TrackMaxDrivingForce = 30000000.0f;
+	float TrackMaxDrivingForce = 35000000.0f;
 };
