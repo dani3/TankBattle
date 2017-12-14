@@ -1,7 +1,6 @@
 #include "Tank.h"
 #include "Engine/World.h"
 #include "TankAimingComponent.h"
-#include "TankMovementComponent.h"
 #include "Projectile.h"
 #include "TankBarrel.h"
 #include "TankTrack.h"
@@ -16,6 +15,8 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
+
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
 // Aim at the location given
