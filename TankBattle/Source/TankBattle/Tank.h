@@ -6,7 +6,6 @@
 
 class UTankBarrel;
 class UTankTurret;
-class UTankAimingComponent;
 class UTankTrack;
 class AProjectile;
 
@@ -21,15 +20,8 @@ public:
 
 	virtual void BeginPlay() override;
 
-	// Aim at the location given
-	void AimAt(FVector HitLocation);
-
 	UFUNCTION(BlueprintCallable)
 	void Fire();
-
-protected:
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent * TankAimingComponent = nullptr;
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
