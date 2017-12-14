@@ -29,6 +29,14 @@ void UTankAimingComponent::TickComponent(
 	{
 		AimingState = EAimingState::Reloading;
 	}
+	else if (IsBarrelMoving())
+	{
+		AimingState = EAimingState::Aiming;
+	}
+	else
+	{
+		AimingState = EAimingState::Locked;
+	}
 }
 
 void UTankAimingComponent::Initialise(UTankBarrel * Barrel, UTankTurret * Turret)
@@ -56,24 +64,11 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 		  , 0
 		  , ESuggestProjVelocityTraceOption::DoNotTrace))
 	{
-		auto AimDirection = OutLauchVelocity.GetSafeNormal();
+		AimDirection = OutLauchVelocity.GetSafeNormal();
 
 		// Move barrel
 		MoveBarrelTowards(AimDirection);
 	}
-}
-
-void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
-{
-	if (!ensure(Barrel) || !ensure(Turret)) { return; }
-
-	// Work-out difference between current barrel rotation and AimDirection
-	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
-	auto AimAsRotator = AimDirection.Rotation();
-	auto DeltaRotator = AimAsRotator - BarrelRotator;
-
-	Barrel->Elevate(DeltaRotator.Pitch);
-	Turret->Rotate(DeltaRotator.Yaw);
 }
 
 void UTankAimingComponent::Fire()
@@ -92,5 +87,27 @@ void UTankAimingComponent::Fire()
 
 		LastTimeFire = FPlatformTime::Seconds();
 	}
+}
+
+void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
+{
+	if (!ensure(Barrel) || !ensure(Turret)) { return; }
+
+	// Work-out difference between current barrel rotation and AimDirection
+	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
+	auto AimAsRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimAsRotator - BarrelRotator;
+
+	Barrel->Elevate(DeltaRotator.Pitch);
+	Turret->Rotate(DeltaRotator.Yaw);
+}
+
+bool UTankAimingComponent::IsBarrelMoving() const
+{
+	if (!ensure(Barrel)) { return false; }
+
+	auto BarrelCurrentAimLocation = Barrel->GetForwardVector();
+
+	return !(BarrelCurrentAimLocation.Equals(AimDirection, 0.01f));
 }
 
