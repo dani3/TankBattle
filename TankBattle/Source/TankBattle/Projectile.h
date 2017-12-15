@@ -5,6 +5,9 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Projectile.generated.h"
 
+/*
+ * Class used to represent a projectile.
+ */
 UCLASS()
 class TANKBATTLE_API AProjectile : public AActor
 {
@@ -20,6 +23,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// Launch projectile to a given speed
 	void LaunchProjectile(float Speed);
 
 protected:

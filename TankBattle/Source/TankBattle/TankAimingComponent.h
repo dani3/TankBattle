@@ -17,6 +17,9 @@ class UTankBarrel;
 class UTankTurret;
 class AProjectile;
 
+/*
+ * Class used to aim at a certain location and fire.
+ */
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class TANKBATTLE_API UTankAimingComponent : public UActorComponent
 {
@@ -26,11 +29,14 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
+	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// Called every frame
 	virtual void TickComponent(
 		float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
+	// Aim at a certaing location
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")

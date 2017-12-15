@@ -13,6 +13,7 @@ UTankAimingComponent::UTankAimingComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
+// Called when the game starts or when spawned
 void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -20,6 +21,7 @@ void UTankAimingComponent::BeginPlay()
 	LastTimeFire = FPlatformTime::Seconds();
 }
 
+// Called every frame
 void UTankAimingComponent::TickComponent(
 	float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {

@@ -22,6 +22,7 @@ void AProjectile::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+// Launch projectile to a given speed
 void AProjectile::LaunchProjectile(float Speed)
 {
 	if (!ensure(ProjectileMovementComponent)) { return; }
