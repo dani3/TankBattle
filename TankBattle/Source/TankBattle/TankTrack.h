@@ -19,17 +19,19 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// Called when the game starts or when spawned
-	virtual void TickComponent(
-		float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
-
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetThrottle(float Throttle);
 
 private:
 	// Max force per track in Newtons
 	UPROPERTY(EditDefaultsOnly)
-	float TrackMaxDrivingForce = 35000000.0f;
+	float TrackMaxDrivingForce = 40000000.0f;
+
+	float CurrentThrottle = 0.f;
+
+	void ApplySidewaysForce();
+
+	void DriveTrack();
 
 	UFUNCTION()
 	void OnHit(
