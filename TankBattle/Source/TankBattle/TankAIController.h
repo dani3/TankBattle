@@ -18,5 +18,6 @@ public:
 
 private:
 	// How close can the AI get close to the player in cm
-	float AcceptanceRadius = 3000.f;
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float AcceptanceRadius = 10000.f;
 };

@@ -73,6 +73,11 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 	}
 }
 
+EAimingState UTankAimingComponent::GetAimingState() const
+{
+	return AimingState;
+}
+
 void UTankAimingComponent::Fire()
 {
 	if (AimingState != EAimingState::Reloading)

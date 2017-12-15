@@ -39,6 +39,8 @@ public:
 	// Aim at a certaing location
 	void AimAt(FVector HitLocation);
 
+	EAimingState GetAimingState() const;
+
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTankBarrel * Barrel, UTankTurret * Turret);
 
