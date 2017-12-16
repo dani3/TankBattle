@@ -78,8 +78,19 @@ EAimingState UTankAimingComponent::GetAimingState() const
 	return AimingState;
 }
 
+int UTankAimingComponent::GetRoundsLeft() const
+{
+	return RoundsLeft;
+}
+
 void UTankAimingComponent::Fire()
 {
+	if (RoundsLeft == 0)
+	{
+		AimingState = EAimingState::OutOfAmmo;
+		return;
+	}
+
 	if (AimingState != EAimingState::Reloading)
 	{
 		if (!ensure(Barrel)) { return; }
@@ -93,6 +104,8 @@ void UTankAimingComponent::Fire()
 		Projectile->LaunchProjectile(LaunchSpeed);
 
 		LastTimeFire = FPlatformTime::Seconds();
+
+		RoundsLeft--;
 	}
 }
 
