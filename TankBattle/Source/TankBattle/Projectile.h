@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "Projectile.generated.h"
 
 /*
@@ -27,5 +28,12 @@ public:
 	void LaunchProjectile(float Speed);
 
 protected:
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+	UStaticMeshComponent * CollisionMesh = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+	UParticleSystemComponent * LaunchBlast = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
 	UProjectileMovementComponent * ProjectileMovementComponent = nullptr;
 };
