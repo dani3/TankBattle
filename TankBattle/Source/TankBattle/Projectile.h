@@ -21,9 +21,6 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 	// Launch projectile to a given speed
 	void LaunchProjectile(float Speed);
 
@@ -35,5 +32,13 @@ protected:
 	UParticleSystemComponent * LaunchBlast = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
+	UParticleSystemComponent * ImpactBlast = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
 	UProjectileMovementComponent * ProjectileMovementComponent = nullptr;
+
+private:
+	UFUNCTION()
+	void OnHit(
+		UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, FVector NormalImpulse, const FHitResult & Hit);
 };
