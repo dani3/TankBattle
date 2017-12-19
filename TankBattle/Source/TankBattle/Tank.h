@@ -13,5 +13,13 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
-	virtual void BeginPlay() override;
+	virtual float TakeDamage(
+		float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser) override;
+
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	int32 StartingHealth = 100;
+
+	UPROPERTY(VisibleAnywhere, Category = "Info")
+	int32 CurrentHealth = StartingHealth;
 };
