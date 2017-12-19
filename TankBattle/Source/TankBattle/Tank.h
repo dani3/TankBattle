@@ -4,12 +4,16 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
+
 UCLASS()
 class TANKBATTLE_API ATank : public APawn
 {
 	GENERATED_BODY()
 
 public:
+	FTankDelegate OnDeath;
+
 	// Sets default values for this pawn's properties
 	ATank();
 

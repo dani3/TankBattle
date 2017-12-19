@@ -20,4 +20,9 @@ private:
 	// How close can the AI get close to the player in cm
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float AcceptanceRadius = 10000.f;
+
+	UFUNCTION()
+	void OnTankDeath();
+
+	virtual void SetPawn(APawn * InPawn) override;
 };

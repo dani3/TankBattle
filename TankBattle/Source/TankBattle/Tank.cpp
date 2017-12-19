@@ -18,6 +18,11 @@ float ATank::TakeDamage(
 	UE_LOG(LogTemp, Warning, TEXT("%s Got hit: %i"), *GetName(), DamageToApply);
 	UE_LOG(LogTemp, Warning, TEXT("%s Total Health remaining: %i"), *GetName(), CurrentHealth);
 
+	if (CurrentHealth <= 0)
+	{
+		OnDeath.Broadcast();
+	}
+
 	return DamageToApply;
 }
 
