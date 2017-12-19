@@ -4,6 +4,7 @@
 #include "GameFramework/Actor.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "PhysicsEngine/RadialForceComponent.h"
 #include "Projectile.generated.h"
 
 /*
@@ -37,7 +38,14 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
 	UProjectileMovementComponent * ProjectileMovementComponent = nullptr;
 
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+	URadialForceComponent * ExplosionForce = nullptr;
+
 private:
+	float DestroyDelay = 10.f;
+
+	void DestroyProjectile();
+
 	UFUNCTION()
 	void OnHit(
 		UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, FVector NormalImpulse, const FHitResult & Hit);

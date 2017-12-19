@@ -83,18 +83,19 @@ int32 UTankAimingComponent::GetRoundsLeft() const
 	return RoundsLeft;
 }
 
-void UTankAimingComponent::Fire()
+bool UTankAimingComponent::Fire()
 {
 	if (RoundsLeft == 0)
 	{
 		AimingState = EAimingState::OutOfAmmo;
-		return;
+
+		return false;
 	}
 
 	if (AimingState != EAimingState::Reloading)
 	{
-		if (!ensure(Barrel)) { return; }
-		if (!ensure(ProjectileBlueprint)) { return; }
+		if (!ensure(Barrel)) { return false; }
+		if (!ensure(ProjectileBlueprint)) { return false; }
 
 		// Spawn a projectile at the socket location on the barrel
 		auto SocketLocation = Barrel->GetSocketLocation(FName("Projectile"));
@@ -106,7 +107,11 @@ void UTankAimingComponent::Fire()
 		LastTimeFire = FPlatformTime::Seconds();
 
 		RoundsLeft--;
+
+		return true;
 	}
+
+	return false;
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)

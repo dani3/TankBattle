@@ -1,6 +1,8 @@
 #include "Projectile.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/PrimitiveComponent.h"
+#include "Engine/World.h"
+#include "Public/TimerManager.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -16,6 +18,8 @@ AProjectile::AProjectile()
 		CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
 	ImpactBlast = 
 		CreateDefaultSubobject<UParticleSystemComponent>(FName("Impact Blast"));
+	ExplosionForce =
+		CreateDefaultSubobject<URadialForceComponent>(FName("Explosion Force"));
 
 	SetRootComponent(CollisionMesh);
 
@@ -23,6 +27,7 @@ AProjectile::AProjectile()
 
 	LaunchBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	ImpactBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	ExplosionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
 	ProjectileMovementComponent->bAutoActivate = false;
 	ImpactBlast->bAutoActivate = false;
@@ -49,5 +54,17 @@ void AProjectile::OnHit(
 	UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
 	ImpactBlast->Activate();
+	ExplosionForce->FireImpulse();
+
+	SetRootComponent(ImpactBlast);
+	CollisionMesh->DestroyComponent();
+
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AProjectile::DestroyProjectile, DestroyDelay);
+}
+
+void AProjectile::DestroyProjectile()
+{
+	this->Destroy();
 }
 

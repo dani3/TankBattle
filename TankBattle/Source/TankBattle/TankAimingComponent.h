@@ -49,7 +49,7 @@ public:
 	int32 GetRoundsLeft() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
-	void Fire();
+	bool Fire();
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
@@ -66,7 +66,7 @@ private:
 	float ReloadTimeInSeconds = 3.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	int32 RoundsLeft = 8;
+	int32 RoundsLeft = 20;
 
 	double LastTimeFire = 0;
 
