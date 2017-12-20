@@ -43,6 +43,8 @@ void ATankPlayerController::SetPawn(APawn * InPawn)
 void ATankPlayerController::OnTankDeath()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Player dead"));
+
+	StartSpectatingOnly();
 }
 
 void ATankPlayerController::AimTowardsCrosshair()
@@ -99,7 +101,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 			HitResult
 		  , StartLocation
 		  , EndLocation
-		  , ECollisionChannel::ECC_Visibility))
+		  , ECollisionChannel::ECC_Camera))
 	{
 		OutHitLocation = HitResult.Location;
 

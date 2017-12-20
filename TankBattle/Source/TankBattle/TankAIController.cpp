@@ -21,11 +21,14 @@ void ATankAIController::Tick(float DeltaTime)
 	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
 	auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
 
-	if (ensure(PlayerTank) && ensure(AimingComponent))
+	if (!PlayerTank) { return; }
+
+	if (ensure(AimingComponent))
 	{
 		// Move towards the player
 		MoveToActor(PlayerTank, AcceptanceRadius);
 
+		// Aim at the player
 		AimingComponent->AimAt(PlayerTank->GetActorLocation());
 		
 		if (AimingComponent->GetAimingState() == EAimingState::Locked)
@@ -53,6 +56,11 @@ void ATankAIController::SetPawn(APawn * InPawn)
 void ATankAIController::OnTankDeath()
 {
 	UE_LOG(LogTemp, Warning, TEXT("AI dead"));
+
+	if (GetPawn())
+	{
+		GetPawn()->DetachFromControllerPendingDestroy();
+	}
 }
 
 
